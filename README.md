@@ -38,6 +38,7 @@ npm install
    - Create a free account at [clerk.com](https://clerk.com)
    - Create a new application
    - Copy your API keys from the dashboard
+   - See [CLERK_SETUP.md](CLERK_SETUP.md) for detailed setup instructions
 
 4. Create environment file:
 ```bash
@@ -49,6 +50,8 @@ cp .env.example .env.local
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_publishable_key_here
 CLERK_SECRET_KEY=your_secret_key_here
 ```
+
+**Note:** For a detailed step-by-step guide on setting up Clerk, see [CLERK_SETUP.md](CLERK_SETUP.md)
 
 ### Development
 
