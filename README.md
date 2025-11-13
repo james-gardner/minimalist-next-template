@@ -1,12 +1,13 @@
 # Minimalist Next.js Template
 
-A production-ready, minimalist Next.js template with TypeScript, Tailwind CSS, and essential security features.
+A production-ready, minimalist Next.js template with TypeScript, Tailwind CSS, Clerk authentication, and essential security features.
 
 ## Features
 
 - **Next.js 16** - Latest version with App Router
 - **TypeScript** - Strict mode enabled for type safety
 - **Tailwind CSS v4** - Utility-first CSS framework
+- **Clerk Authentication** - Email/password authentication with built-in UI components
 - **Security Headers** - Pre-configured security headers including CSP, HSTS, and more
 - **Error Handling** - Built-in error boundaries and 404 page
 - **ESLint** - Code quality and consistency
@@ -18,6 +19,7 @@ A production-ready, minimalist Next.js template with TypeScript, Tailwind CSS, a
 
 - Node.js 20+ 
 - npm or yarn
+- Clerk account (free at [clerk.com](https://clerk.com))
 
 ### Installation
 
@@ -32,9 +34,20 @@ cd minimalist-next-template
 npm install
 ```
 
-3. Create environment file:
+3. Set up Clerk:
+   - Create a free account at [clerk.com](https://clerk.com)
+   - Create a new application
+   - Copy your API keys from the dashboard
+
+4. Create environment file:
 ```bash
 cp .env.example .env.local
+```
+
+5. Update `.env.local` with your Clerk keys:
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_publishable_key_here
+CLERK_SECRET_KEY=your_secret_key_here
 ```
 
 ### Development
@@ -73,18 +86,46 @@ npm run lint
 
 ```
 ├── app/
-│   ├── error.tsx          # Error boundary
-│   ├── not-found.tsx      # 404 page
-│   ├── layout.tsx         # Root layout
-│   ├── page.tsx           # Home page
-│   └── globals.css        # Global styles
-├── public/                # Static files
-├── .env.example           # Environment variables template
-├── next.config.ts         # Next.js configuration
-├── tsconfig.json          # TypeScript configuration
-├── tailwind.config.ts     # Tailwind configuration (if exists)
-└── package.json           # Dependencies
+│   ├── dashboard/          # Protected dashboard page
+│   ├── sign-in/            # Clerk sign-in page
+│   ├── sign-up/            # Clerk sign-up page
+│   ├── error.tsx           # Error boundary
+│   ├── not-found.tsx       # 404 page
+│   ├── layout.tsx          # Root layout with ClerkProvider
+│   ├── page.tsx            # Home page
+│   └── globals.css         # Global styles
+├── public/                 # Static files
+├── middleware.ts           # Clerk authentication middleware
+├── .env.example            # Environment variables template
+├── next.config.ts          # Next.js configuration
+├── tsconfig.json           # TypeScript configuration
+└── package.json            # Dependencies
 ```
+
+## Authentication
+
+This template uses [Clerk](https://clerk.com) for authentication with the following features:
+
+- **Email/Password Sign-up** - Users can create accounts with email and password
+- **Sign-in Flow** - Secure authentication with Clerk's built-in UI
+- **Protected Routes** - Middleware-based route protection
+- **User Management** - User profile and session management via Clerk
+- **Dashboard** - Example protected page showing user information
+
+### Authentication Routes
+
+- `/sign-in` - Sign in page
+- `/sign-up` - Sign up page  
+- `/dashboard` - Protected dashboard (requires authentication)
+
+### Configuring Clerk
+
+In your Clerk dashboard:
+
+1. Go to **User & Authentication** → **Email, Phone, Username**
+2. Enable **Email address** 
+3. Set authentication strategy to **Password**
+4. Disable social logins if you only want email/password
 
 ## Security Features
 
@@ -96,6 +137,7 @@ This template includes several security best practices:
 - **X-XSS-Protection** - Enables browser XSS protection
 - **Referrer-Policy** - Controls referrer information
 - **Permissions-Policy** - Restricts browser features
+- **Clerk Authentication** - Industry-standard authentication with session management
 
 ## Customization
 
